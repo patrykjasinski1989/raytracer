@@ -1,10 +1,11 @@
+EPSILON: float = 1e-5
+
+
+def nearly_equal(a: float, b: float) -> bool:
+    return abs(a - b) < EPSILON
+
+
 class Tuple:
-    EPSILON: float = 1e-9
-
-    @staticmethod
-    def nearly_equal(a: float, b: float) -> bool:
-        return abs(a - b) < Tuple.EPSILON
-
     def __init__(self, x, y, z, w):
         self.x = float(x)
         self.y = float(y)
@@ -18,10 +19,10 @@ class Tuple:
         if not isinstance(other, Tuple):
             return NotImplemented
         return (
-            self.nearly_equal(self.x, other.x)
-            and self.nearly_equal(self.y, other.y)
-            and self.nearly_equal(self.z, other.z)
-            and self.nearly_equal(self.w, other.w)
+            nearly_equal(self.x, other.x)
+            and nearly_equal(self.y, other.y)
+            and nearly_equal(self.z, other.z)
+            and nearly_equal(self.w, other.w)
         )
 
     def __add__(self, other: "Tuple") -> "Tuple":

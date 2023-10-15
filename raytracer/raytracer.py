@@ -39,4 +39,4 @@ while p.position.y > 0:
         c.write_pixel(x, y, color)
     p = tick(e, p)
 with open("projectile_path.ppm", "w") as f:
-        f.write(c.to_ppm())
+    f.write(c.to_ppm())

@@ -1,6 +1,6 @@
 import math
 import unittest
-from raytracer.tuple import Color, Tuple, point, vector
+from raytracer.tuple import Color, Tuple, nearly_equal, point, vector
 
 
 class TestTuple(unittest.TestCase):
@@ -107,9 +107,9 @@ class TestTuple(unittest.TestCase):
 class TestColor(unittest.TestCase):
     def test_colors_are_rgb_tuples(self):
         c = Color(-0.5, 0.4, 1.7)
-        assert Tuple.nearly_equal(c.red, -0.5)
-        assert Tuple.nearly_equal(c.green, 0.4)
-        assert Tuple.nearly_equal(c.blue, 1.7)
+        assert nearly_equal(c.red, -0.5)
+        assert nearly_equal(c.green, 0.4)
+        assert nearly_equal(c.blue, 1.7)
 
     def test_adding_colors(self):
         c1 = Color(0.9, 0.6, 0.75)
