@@ -5,22 +5,22 @@ from raytracer.tuple import Color, Tuple, nearly_equal, point, vector
 
 class TestTuple(unittest.TestCase):
     def test_tuple_point(self):
-        t = Tuple(4.3, -4.2, 3.1, 1.0)
-        assert t.x == 4.3
-        assert t.y == -4.2
-        assert t.z == 3.1
-        assert t.w == 1.0
-        assert t.is_point()
-        assert not t.is_vector()
+        a = Tuple(4.3, -4.2, 3.1, 1.0)
+        assert a.x == 4.3
+        assert a.y == -4.2
+        assert a.z == 3.1
+        assert a.w == 1.0
+        assert a.is_point()
+        assert not a.is_vector()
 
     def test_tuple_vector(self):
-        t = Tuple(4.3, -4.2, 3.1, 0.0)
-        assert t.x == 4.3
-        assert t.y == -4.2
-        assert t.z == 3.1
-        assert t.w == 0.0
-        assert not t.is_point()
-        assert t.is_vector()
+        a = Tuple(4.3, -4.2, 3.1, 0.0)
+        assert a.x == 4.3
+        assert a.y == -4.2
+        assert a.z == 3.1
+        assert a.w == 0.0
+        assert not a.is_point()
+        assert a.is_vector()
 
     def test_factory_functions(self):
         p = point(4, -4, 3)
@@ -30,9 +30,9 @@ class TestTuple(unittest.TestCase):
         assert v == Tuple(4, -4, 3, 0)
 
     def test_adding_tuples(self):
-        t1 = Tuple(3, -2, 5, 1)
-        t2 = Tuple(-2, 3, 1, 0)
-        assert t1 + t2 == Tuple(1, 1, 6, 1)
+        a1 = Tuple(3, -2, 5, 1)
+        a2 = Tuple(-2, 3, 1, 0)
+        assert a1 + a2 == Tuple(1, 1, 6, 1)
 
     def test_subtracting_points(self):
         p1 = point(3, 2, 1)
@@ -55,20 +55,20 @@ class TestTuple(unittest.TestCase):
         assert zero - v == vector(-1, 2, -3)
 
     def test_negating_tuple(self):
-        t = Tuple(1, -2, 3, -4)
-        assert -t == Tuple(-1, 2, -3, 4)
+        a = Tuple(1, -2, 3, -4)
+        assert -a == Tuple(-1, 2, -3, 4)
 
     def test_multiplying_tuple_by_scalar(self):
-        t = Tuple(1, -2, 3, -4)
-        assert t * 3.5 == Tuple(3.5, -7, 10.5, -14)
+        a = Tuple(1, -2, 3, -4)
+        assert a * 3.5 == Tuple(3.5, -7, 10.5, -14)
 
     def test_multiplying_tuple_by_fraction(self):
-        t = Tuple(1, -2, 3, -4)
-        assert t * 0.5 == Tuple(0.5, -1, 1.5, -2)
+        a = Tuple(1, -2, 3, -4)
+        assert a * 0.5 == Tuple(0.5, -1, 1.5, -2)
 
     def test_dividing_tuple_by_scalar(self):
-        t = Tuple(1, -2, 3, -4)
-        assert t / 2 == Tuple(0.5, -1, 1.5, -2)
+        a = Tuple(1, -2, 3, -4)
+        assert a / 2 == Tuple(0.5, -1, 1.5, -2)
 
     def test_magnitude(self):
         v1 = vector(1, 0, 0)
