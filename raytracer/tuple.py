@@ -1,24 +1,18 @@
-from dataclasses import dataclass, field
-
-
-@dataclass
 class Tuple:
-    x: float
-    y: float
-    z: float
-    w: float
-
-    EPSILON: float = field(default=1e-9, init=False, repr=False)
+    EPSILON: float = 1e-9
 
     @staticmethod
     def nearly_equal(a: float, b: float) -> bool:
         return abs(a - b) < Tuple.EPSILON
 
-    def __repr__(self) -> str:
-        return f"Tuple({self.x}, {self.y}, {self.z}, {self.w})"
+    def __init__(self, x, y, z, w):
+        self.x = float(x)
+        self.y = float(y)
+        self.z = float(z)
+        self.w = float(w)
 
     def __str__(self) -> str:
-        return f"({self.x}, {self.y}, {self.z}, {self.w})"
+        return f"({self.x:.2f}, {self.y:.2f}, {self.z:.2f}, {self.w:.2f})"
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Tuple):
@@ -82,29 +76,22 @@ def vector(x: float, y: float, z: float) -> Tuple:
     return Tuple(x, y, z, 0.0)
 
 
-if __name__ == "__main__":
+class Color(Tuple):
+    def __init__(self, red, green, blue):
+        super().__init__(red, green, blue, 0.0)
+        self.red = self.x
+        self.green = self.y
+        self.blue = self.z
 
-    class Projectile:
-        def __init__(self, position: Tuple, velocity: Tuple) -> None:
-            self.position = position
-            self.velocity = velocity
+    def hadamard_product(self, other):
+        return Color(
+            self.red * other.red, self.green * other.green, self.blue * other.blue
+        )
 
-    class Environment:
-        def __init__(self, gravity: Tuple, wind: Tuple) -> None:
-            self.gravity = gravity
-            self.wind = wind
-
-    def tick(env: Environment, proj: Projectile) -> Projectile:
-        position = proj.position + proj.velocity
-        velocity = proj.velocity + env.gravity + env.wind
-        return Projectile(position, velocity)
-
-    p = Projectile(10 * point(0, 1, 0), vector(1, 1, 0).normalize())
-    e = Environment(vector(0, -0.1, 0), vector(-0.01, 0, 0))
-
-    tick_count = 0
-    while p.position.y > 0:
-        print(p.position)
-        p = tick(e, p)
-        tick_count += 1
-    print(f"The projectile hit the ground after {tick_count} ticks.")
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Color(self.red * other, self.green * other, self.blue * other)
+        elif isinstance(other, Color):
+            return self.hadamard_product(other)
+        else:
+            return NotImplemented
