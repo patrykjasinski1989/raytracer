@@ -1,5 +1,13 @@
 from typing import List, Union
 
+from raytracer.transformation_matrices import (
+    rotation_x_matrix,
+    rotation_y_matrix,
+    rotation_z_matrix,
+    scaling_matrix,
+    shearing_matrix,
+    translation_matrix,
+)
 from raytracer.tuple import Tuple, nearly_equal
 
 
@@ -7,6 +15,10 @@ class Matrix:
     @classmethod
     def zeros(cls, rows: int, cols: int) -> "Matrix":
         return cls([[0.0 for _ in range(cols)] for _ in range(rows)])
+
+    @classmethod
+    def identity(cls) -> "Matrix":
+        return cls([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
 
     def __init__(self, grid: List[List[float]]):
         self.grid = grid
@@ -58,6 +70,11 @@ class Matrix:
         else:
             return NotImplemented
 
+    def __str__(self) -> str:
+        return "\n".join(
+            [" ".join([f"{value:.2f}" for value in row]) for row in self.grid]
+        )
+
     def transpose(self) -> "Matrix":
         return Matrix(
             [[self.grid[j][i] for j in range(self.rows)] for i in range(self.cols)]
@@ -100,3 +117,27 @@ class Matrix:
             for col in range(self.cols):
                 m2.grid[col][row] = self.cofactor(row, col) / self.determinant()
         return m2
+
+    def translate(self, x, y, z):
+        self = Matrix(translation_matrix(x, y, z)) * self
+        return self
+
+    def scale(self, x, y, z):
+        self = Matrix(scaling_matrix(x, y, z)) * self
+        return self
+
+    def rotate_x(self, r):
+        self = Matrix(rotation_x_matrix(r)) * self
+        return self
+
+    def rotate_y(self, r):
+        self = Matrix(rotation_y_matrix(r)) * self
+        return self
+
+    def rotate_z(self, r):
+        self = Matrix(rotation_z_matrix(r)) * self
+        return self
+
+    def shear(self, xy, xz, yx, yz, zx, zy):
+        self = Matrix(shearing_matrix(xy, xz, yx, yz, zx, zy)) * self
+        return self

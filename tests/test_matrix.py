@@ -5,7 +5,7 @@ from raytracer.tuple import Tuple, nearly_equal
 
 
 class TestMatrix(unittest.TestCase):
-    identity_matrix = Matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+    identity_matrix = Matrix.identity()
 
     def test_4x4_matrix(self):
         M = Matrix(
