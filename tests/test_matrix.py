@@ -133,22 +133,22 @@ class TestMatrix(unittest.TestCase):
     def test_calculating_minor_of_3x3_matrix(self):
         A = Matrix([[3, 5, 0], [2, -1, -7], [6, -1, 5]])
         B = A.submatrix(1, 0)
-        assert B.determinant() == 25
-        assert A.minor(1, 0) == 25
+        self.assertAlmostEqual(B.determinant(), 25)
+        self.assertAlmostEqual(A.minor(1, 0), 25)
 
     def test_calculating_cofactor_of_3x3_matrix(self):
         A = Matrix([[3, 5, 0], [2, -1, -7], [6, -1, 5]])
-        assert A.minor(0, 0) == -12
-        assert A.cofactor(0, 0) == -12
-        assert A.minor(1, 0) == 25
-        assert A.cofactor(1, 0) == -25
+        self.assertAlmostEqual(A.minor(0, 0), -12)
+        self.assertAlmostEqual(A.cofactor(0, 0), -12)
+        self.assertAlmostEqual(A.minor(1, 0), 25)
+        self.assertAlmostEqual(A.cofactor(1, 0), -25)
 
     def test_calculating_determinant_of_3x3_matrix(self):
         A = Matrix([[1, 2, 6], [-5, 8, -4], [2, 6, 4]])
-        assert A.cofactor(0, 0) == 56
-        assert A.cofactor(0, 1) == 12
-        assert A.cofactor(0, 2) == -46
-        assert A.determinant() == -196
+        self.assertAlmostEqual(A.cofactor(0, 0), 56)
+        self.assertAlmostEqual(A.cofactor(0, 1), 12)
+        self.assertAlmostEqual(A.cofactor(0, 2), -46)
+        self.assertAlmostEqual(A.determinant(), -196)
 
     def test_calculating_determinant_of_4x4_matrix(self):
         A = Matrix(
@@ -159,11 +159,11 @@ class TestMatrix(unittest.TestCase):
                 [-6, 7, 7, -9],
             ]
         )
-        assert A.cofactor(0, 0) == 690
-        assert A.cofactor(0, 1) == 447
-        assert A.cofactor(0, 2) == 210
-        assert A.cofactor(0, 3) == 51
-        assert A.determinant() == -4071
+        self.assertAlmostEqual(A.cofactor(0, 0), 690)
+        self.assertAlmostEqual(A.cofactor(0, 1), 447)
+        self.assertAlmostEqual(A.cofactor(0, 2), 210)
+        self.assertAlmostEqual(A.cofactor(0, 3), 51)
+        self.assertAlmostEqual(A.determinant(), -4071)
 
     def test_invertible(self):
         A = Matrix(
@@ -201,18 +201,21 @@ class TestMatrix(unittest.TestCase):
         assert A.is_invertible()
         B = A.inverse()
 
-        assert A.determinant() == 532
-        assert A.cofactor(2, 3) == -160
-        assert B.grid[3][2] == -160 / 532
-        assert A.cofactor(3, 2) == 105
-        assert B.grid[2][3] == 105 / 532
-        assert B == Matrix(
-            [
-                [0.21805, 0.45113, 0.24060, -0.04511],
-                [-0.80827, -1.45677, -0.44361, 0.52068],
-                [-0.07895, -0.22368, -0.05263, 0.19737],
-                [-0.52256, -0.81391, -0.30075, 0.30639],
-            ]
+        self.assertAlmostEqual(A.determinant(), 532)
+        self.assertAlmostEqual(A.cofactor(2, 3), -160)
+        self.assertAlmostEqual(B.grid[3][2], -160 / 532)
+        self.assertAlmostEqual(A.cofactor(3, 2), 105)
+        self.assertAlmostEqual(B.grid[2][3], 105 / 532)
+        self.assertAlmostEqual(
+            B,
+            Matrix(
+                [
+                    [0.21805, 0.45113, 0.24060, -0.04511],
+                    [-0.80827, -1.45677, -0.44361, 0.52068],
+                    [-0.07895, -0.22368, -0.05263, 0.19737],
+                    [-0.52256, -0.81391, -0.30075, 0.30639],
+                ]
+            ),
         )
 
     def test_inverse_of_matrix_2(self):

@@ -69,12 +69,32 @@ class Tuple:
         return self.w == 0.0
 
 
-def point(x: float, y: float, z: float) -> Tuple:
-    return Tuple(x, y, z, 1.0)
+class Point(Tuple):
+    def __init__(self, x: float, y: float, z: float):
+        super().__init__(x, y, z, 1.0)
+
+    def __add__(self, other: "Tuple") -> "Point":
+        if not isinstance(other, Vector):
+            raise TypeError("Can only add Vector to Point")
+        return Point(self.x + other.x, self.y + other.y, self.z + other.z)
 
 
-def vector(x: float, y: float, z: float) -> Tuple:
-    return Tuple(x, y, z, 0.0)
+class Vector(Tuple):
+    def __init__(self, x: float, y: float, z: float):
+        super().__init__(x, y, z, 0.0)
+
+    def __mul__(self, scalar: float) -> "Vector":
+        return Vector(self.x * scalar, self.y * scalar, self.z * scalar)
+
+    __rmul__ = __mul__
+
+
+def point(x: float, y: float, z: float) -> Point:
+    return Point(x, y, z)
+
+
+def vector(x: float, y: float, z: float) -> Vector:
+    return Vector(x, y, z)
 
 
 class Color(Tuple):

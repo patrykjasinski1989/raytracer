@@ -1,7 +1,10 @@
 from math import pi
 from raytracer.canvas import Canvas
+from raytracer.intersection import hit
+from raytracer.ray import Ray
+from raytracer.sphere import Sphere
 from raytracer.transformation import rotation_y
-from raytracer.tuple import Color, Tuple, point
+from raytracer.tuple import Color, Point, Tuple, point
 
 
 class Projectile:
@@ -23,40 +26,32 @@ def tick(env: Environment, proj: Projectile) -> Projectile:
 
 
 if __name__ == "__main__":
-    SIZE = 640
-    c = Canvas(SIZE, SIZE)
-    radius = 3 / 8 * SIZE
-    center = SIZE // 2
+    # start the ray at z = -5
+    ray_origin = Point(0, 0, -5)
+    # put the wall at z = 10
+    wall_z = 10
+    wall_size = 7.0
+    canvas_pixels = 100
+    pixel_size = wall_size / canvas_pixels
+    half = wall_size / 2
+    canvas = Canvas(canvas_pixels, canvas_pixels)
+    color = Color(1, 0, 0)  # red
+    shape = Sphere()
 
-    twelve = point(0, 0, 1)
+    # for each row of pixels in the canvas
+    for y in range(canvas_pixels):
+        # compute the world y coordinate (top = +half, bottom = -half)
+        world_y = half - pixel_size * y
+        # for each pixel in the row
+        for x in range(canvas_pixels):
+            # compute the world x coordinate (left = -half, right = half)
+            world_x = -half + pixel_size * x
+            # describe the point on the wall that the ray will target
+            position = Point(world_x, world_y, wall_z)
+            r = Ray(ray_origin, (position - ray_origin).normalize())  # type: ignore
+            xs = shape.intersect(r)
+            if hit(xs):
+                canvas.write_pixel(x, y, color)
 
-    for i in range(12):
-        r = rotation_y(i * pi / 6)
-        hour = r * twelve
-        x = int(hour.x * radius + center)
-        y = int(hour.z * radius + center)
-        c.write_pixel(x, y, Color(1, 1, 1))
-
-    with open("clock.ppm", "w") as f:
-        f.write(c.to_ppm())
-
-    # start = point(0, 1, 0)
-    # velocity = vector(1, 1.8, 0).normalize() * 11.25
-    # p = Projectile(start, velocity)
-
-    # gravity = vector(0, -0.1, 0)
-    # wind = vector(-0.01, 0, 0)
-    # e = Environment(gravity, wind)
-
-    # c = Canvas(900, 550)
-    # color = Color(1, 0, 0)
-
-    # tick_count = 0
-    # while p.position.y > 0:
-    #     x = int(p.position.x)
-    #     y = c.height - int(p.position.y)
-    #     if 0 <= x < c.width and 0 <= y < c.height:
-    #         c.write_pixel(x, y, color)
-    #     p = tick(e, p)
-    # with open("projectile_path.ppm", "w") as f:
-    #     f.write(c.to_ppm())
+    with open("circle.ppm", "w") as f:
+        f.write(canvas.to_ppm())

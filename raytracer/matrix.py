@@ -1,5 +1,7 @@
 from typing import List, Union
 
+import numpy as np
+
 from raytracer.transformation_matrices import (
     rotation_x_matrix,
     rotation_y_matrix,
@@ -81,13 +83,7 @@ class Matrix:
         )
 
     def determinant(self) -> float:
-        if self.rows == 2 and self.cols == 2:
-            return self.grid[0][0] * self.grid[1][1] - self.grid[0][1] * self.grid[1][0]
-
-        determinant = 0.0
-        for col in range(self.cols):
-            determinant += self.grid[0][col] * self.cofactor(0, col)
-        return determinant
+        return np.linalg.det(self.grid)
 
     def submatrix(self, row: int, col: int) -> "Matrix":
         return Matrix(

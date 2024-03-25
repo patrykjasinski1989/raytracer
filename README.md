@@ -14,3 +14,9 @@ black . && mypy . && pytest -v
 - `black .` formats the code.
 - `mypy .` checks for type consistency.
 - `pytest -v` runs all tests in verbose mode.
+
+## Profiling
+```bash
+python -m cProfile -o profile_output.prof -m raytracer.raytracer
+snakeviz profile_output.prof
+```
