@@ -1,4 +1,4 @@
-from raytracer.transformation_matrices import (
+from raytracer.transformation_matrix import (
     translation_matrix,
     scaling_matrix,
     rotation_x_matrix,

@@ -1,6 +1,6 @@
 import math
 import unittest
-from raytracer.tuple import Color, Tuple, nearly_equal, point, vector
+from raytracer.tuple import Color, Tuple, Vector, nearly_equal, point, vector
 
 
 class TestTuple(unittest.TestCase):
@@ -102,6 +102,18 @@ class TestTuple(unittest.TestCase):
         b = vector(2, 3, 4)
         assert a.cross(b) == vector(-1, 2, -1)
         assert b.cross(a) == vector(1, -2, 1)
+
+    def test_reflecting_vector_approaching_at_45_degrees(self):
+        v = Vector(1, -1, 0)
+        n = Vector(0, 1, 0)
+        r = v.reflect(n)
+        assert r == Vector(1, 1, 0)
+
+    def test_reflecting_vector_off_slanted_surface(self):
+        v = Vector(0, -1, 0)
+        n = Vector(math.sqrt(2) / 2, math.sqrt(2) / 2, 0)
+        r = v.reflect(n)
+        assert r == Vector(1, 0, 0)
 
 
 class TestColor(unittest.TestCase):

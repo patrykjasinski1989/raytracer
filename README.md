@@ -1,6 +1,8 @@
 # Ray Tracer
 A Python implementation of the ray tracer based on [The Ray Tracer Challenge](http://raytracerchallenge.com/).
 
+![Raytraced Image](images/sphere.png)
+
 ## Running the project
 To run the main script, execute the following command from the project's root directory:
 ```bash
@@ -20,3 +22,4 @@ black . && mypy . && pytest -v
 python -m cProfile -o profile_output.prof -m raytracer.raytracer
 snakeviz profile_output.prof
 ```
+    

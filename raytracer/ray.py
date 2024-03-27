@@ -1,5 +1,5 @@
 from raytracer.matrix import Matrix
-from raytracer.transformation_matrices import scaling_matrix, translation_matrix
+from raytracer.transformation_matrix import scaling_matrix, translation_matrix
 from raytracer.tuple import Point, Tuple, Vector
 
 

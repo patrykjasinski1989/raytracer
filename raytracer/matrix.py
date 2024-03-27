@@ -2,7 +2,7 @@ from typing import List, Union
 
 import numpy as np
 
-from raytracer.transformation_matrices import (
+from raytracer.transformation_matrix import (
     rotation_x_matrix,
     rotation_y_matrix,
     rotation_z_matrix,

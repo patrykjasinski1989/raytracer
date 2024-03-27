@@ -50,7 +50,10 @@ class Tuple:
         return (self.x ** 2 + self.y ** 2 + self.z ** 2 + self.w ** 2) ** 0.5
 
     def normalize(self) -> "Tuple":
-        return self / self.magnitude()
+        magnitude = self.magnitude()
+        if magnitude == 0:
+            return self
+        return self / magnitude
 
     def dot(self, other: "Tuple") -> float:
         return self.x * other.x + self.y * other.y + self.z * other.z + self.w * other.w
@@ -67,6 +70,9 @@ class Tuple:
 
     def is_vector(self) -> bool:
         return self.w == 0.0
+
+    def reflect(self, normal: "Tuple") -> "Tuple":
+        return self - normal * 2 * self.dot(normal)
 
 
 class Point(Tuple):
@@ -114,5 +120,13 @@ class Color(Tuple):
             return Color(self.red * other, self.green * other, self.blue * other)
         elif isinstance(other, Color):
             return self.hadamard_product(other)
+        else:
+            return NotImplemented
+
+    def __add__(self, other):
+        if isinstance(other, Color):
+            return Color(
+                self.red + other.red, self.green + other.green, self.blue + other.blue
+            )
         else:
             return NotImplemented
