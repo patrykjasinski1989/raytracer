@@ -1,5 +1,5 @@
 # Ray Tracer
-A Python implementation of the ray tracer based on [The Ray Tracer Challenge](http://raytracerchallenge.com/).
+A Python implementation of the ray tracer based on [The Ray Tracer Challenge](http://raytracerchallenge.com/) (work in progress).
 
 ![Raytraced Image](images/sphere.png)
 
